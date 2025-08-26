@@ -131,4 +131,14 @@ then
 fi
 
 
+## Load all the dev scripts
+SCRIPTS_DIR="$HOME/dotfiles/dev-scripts"
+
+# Check if the directory exists
+
+# Add dev-scripts to PATH if it exists and isn't already included
+if [[ -d "$SCRIPTS_DIR" && ":$PATH:" != *":$SCRIPTS_DIR:"* ]]; then
+  export PATH="$SCRIPTS_DIR:$PATH"
+fi
+
 ## END PERSONAL CONFIGS

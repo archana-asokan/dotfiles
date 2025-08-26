@@ -25,10 +25,3 @@ while read df; do
   mkdir -p "$(dirname "$link")"
   ln -sf "$df" "$link"
 done
-
-
-##  Source Dev Scripts
-# Add dev-scripts to PATH if it exists and isn't already included
-if [[ -d "$DOTFILES_PATH/dev-scripts" && ":$PATH:" != *":$DOTFILES_PATH/dev-scripts:"* ]]; then
-  export PATH="$DOTFILES_PATH/dev-scripts:$PATH"
-fi
