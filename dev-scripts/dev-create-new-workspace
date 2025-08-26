@@ -1,0 +1,28 @@
+#!/bin/bash
+
+REPO=$1
+WORKSPACE_NAME=archana-$REPO-dev
+
+cd $HOME/dd/$REPO
+
+# ## Delete workspace if exists
+workspaces delete $WORKSPACE_NAME
+
+# # Setup secret
+workspaces secrets set GITLAB_TOKEN=$(security find-generic-password -a ${USER} -s gitlab_token -w) --export
+
+# # Create Workspace
+workspaces create --devcontainer-config .devcontainer/datadog/default/devcontainer.json --vscode-template $REPO --repo $REPO $WORKSPACE_NAME
+
+## Setup repo
+ssh -tt workspace-$WORKSPACE_NAME << EOF
+	cd dd/$REPO;
+    update_deps;
+    update-tool ddtool;
+
+    git config --unset-all core.hooksPath;
+    git config --unset-all --global core.hooksPath;
+    pre-commit install;
+
+    exit;
+EOF

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+## Runs Gazelle
+# Exit immediately if any command fails
+set -euo pipefail
+
+# Find the Bazel workspace root directory
+BAZEL_ROOT=$(bazel info workspace)
+
+# Print the root for debugging
+echo "Bazel workspace root found at: $BAZEL_ROOT"
+
+# Change to the Bazel root directory
+cd "$BAZEL_ROOT"
+
+# Run Linting
+bzl run @//tools/format:format_ruff && bzl run @//tools/format:lint_ruff && bzl run //:gazelle

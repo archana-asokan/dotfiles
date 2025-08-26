@@ -1,0 +1,11 @@
+#!/bin/bash
+
+REPO=$1
+WORKSPACE_NAME=archana-$REPO-dev
+if [ -z "$REPO" ]; then
+  echo "Error: REPO argument is required."
+  exit 1
+fi
+
+cursor ~/dev-scripts/$REPO.code-workspace
+ssh workspace-$WORKSPACE_NAME

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DOMAIN='dashboardsnotebooks_backend'
+SERVICE='dashboards'
+
+export LOCAL_ORGSTORE_SQL_ENDPOINT=localhost:5432
+rapid run -d $DOMAIN -s $SERVICE --reload

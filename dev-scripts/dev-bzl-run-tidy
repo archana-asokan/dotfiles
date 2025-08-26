@@ -1,0 +1,17 @@
+#!/bin/bash
+
+## Runs the tidy script
+# Exit immediately if any command fails
+set -euo pipefail
+
+# Find the Bazel workspace root directory
+BAZEL_ROOT=$(bazel info workspace)
+
+# Print the root for debugging
+echo "Bazel workspace root found at: $BAZEL_ROOT"
+
+# Change to the Bazel root directory
+cd "$BAZEL_ROOT"
+
+# Run the tidy script
+bzl run //domains/api_platform/apps/tidy

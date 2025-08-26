@@ -1,0 +1,34 @@
+#!/bin/bash
+
+## Environment
+DATACENTER="us1.staging.dog"
+K8_CLUSTER="gizmo.${DATACENTER}"
+
+
+LOGICAL_NAME="dashbooks"
+CLUSTER_NAMESPACE="orgstore-${LOGICAL_NAME}"
+DATABASE="dashbooks"
+
+
+# kubectl config use-context $K8_CLUSTER
+# kubectl port-forward service/orgstore-$LOGICAL_NAME-toolbox --namespace orgstore-$LOGICAL_NAME 5432:5432
+
+# Retrieve the database password
+PASSWORD=$(ddtool auth token orgstore-$LOGICAL_NAME --datacenter $DATACENTER)
+
+# Check if password retrieval was successful
+if [[ -z "$PASSWORD" ]]; then
+    echo "Error: Failed to retrieve the password."
+    exit 1
+fi
+
+# Define the .pgpass file path
+PGPASS_FILE="$HOME/.pgpass"
+
+# Write the credentials to the .pgpass file
+# hostname:port:database:username:password
+echo "localhost:5432:$DATABASE:$LOGICAL_NAME:$PASSWORD" > "$PGPASS_FILE"
+
+# Set proper permissions (only readable by the user)
+chmod 600 "$PGPASS_FILE"
+echo "✅ .pgpass file created successfully at $PGPASS_FILE"

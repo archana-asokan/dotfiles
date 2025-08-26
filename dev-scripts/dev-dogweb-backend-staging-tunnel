@@ -1,0 +1,14 @@
+#!/bin/bash
+
+## Environment
+DATACENTER="us1.staging.dog"
+K8_CLUSTER="gizmo.${DATACENTER}"
+
+
+LOGICAL_NAME="dashbooks"
+CLUSTER_NAMESPACE="orgstore-${LOGICAL_NAME}"
+DATABASE="dogweb_backend_replica"
+
+
+kubectl config use-context $K8_CLUSTER
+kubectl port-forward service/orgstore-$LOGICAL_NAME-pg-proxy --namespace orgstore-$LOGICAL_NAME 5432:5432
