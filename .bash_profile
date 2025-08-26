@@ -95,7 +95,7 @@ if [ -n "$STY" ]; then echo "(screen)";fi
 
 function prompt_command() {
   if [[ "$OSTYPE" == darwin* ]]; then export MOD_HOSTNAME="localbox"; else export MOD_HOSTNAME=$HOSTNAME; fi;
-  export PS1='\[${BOLD}${MAGENTA}\]$USER \[$WHITE\]at \[$ORANGE\]$MOD_HOSTNAME \[$WHITE\]in \[$GREEN\] $PWD \[$WHITE\]$([[ -n $(git branch 2> /dev/null) ]] && echo on )\[$PURPLE\] $(parse_git_branch)\[$WHITE\]\[$RESET\]\n$ '
+	  export PS1='\[${BOLD}${MAGENTA}\](WORKSPACE) $USER \[$WHITE\]at \[$ORANGE\]$MOD_HOSTNAME \[$WHITE\]in \[$GREEN\] $PWD \[$WHITE\]$([[ -n $(git branch 2> /dev/null) ]] && echo on )\[$PURPLE\] $(parse_git_branch)\[$WHITE\]\[$RESET\]\n$ '
 }
 
 python -c 'import sys; print sys.real_prefix' >> /dev/null 2>&1 && export INVENV=1 || export INVENV=0 && prompt_command > /dev/null 2>&1
